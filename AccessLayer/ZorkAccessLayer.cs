@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjetZORK.DataAccessLayer.AccessLayer
 {
-    class ZorkAccessLayer : BaseAccessLayer<Player>
+    public class ZorkAccessLayer : BaseAccessLayer<Player>
     {
         public ZorkAccessLayer(ZorkManagerDbContext context)
             : base(context)
