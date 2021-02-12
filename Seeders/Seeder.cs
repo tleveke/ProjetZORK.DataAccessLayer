@@ -1,8 +1,6 @@
-﻿using ProjetZORK.DataAccessLayer;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace ProjetZORK
+namespace ProjetZORK.DataAccessLayer.Seeders
 {
     public class Seeder
     {

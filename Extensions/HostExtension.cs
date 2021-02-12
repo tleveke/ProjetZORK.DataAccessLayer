@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjetZORK.DataAccessLayer.Seeders;
 using System;
 using System.Threading.Tasks;
 
-namespace ProjetZORK
+namespace ProjetZORK.DataAccessLayer.Extensions
 {
     public static class HostExtension
     {
