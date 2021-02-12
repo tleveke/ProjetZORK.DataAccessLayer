@@ -19,8 +19,10 @@ namespace ProjetZORK.DataAccessLayer.Extensions
             });
 
             services.AddTransient<ZorkAccessLayer>();
+            services.AddTransient<CellAccessLayer>();
 
             return services;
         }
+
     }
 }
