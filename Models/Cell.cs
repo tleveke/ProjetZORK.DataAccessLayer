@@ -13,6 +13,8 @@ namespace ProjetZORK.DataAccessLayer.Models
         public bool canMoveTo { get; set; }
         public string Description { get; set; }
 
+        public int gameId { get; set; }
+
 
 
     }

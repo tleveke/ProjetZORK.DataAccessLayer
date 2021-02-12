@@ -11,5 +11,7 @@ namespace ProjetZORK.DataAccessLayer.Models
         public int MissRate { get; set; }
 
         public Player player { get; set; }
+
+
     }
 }
