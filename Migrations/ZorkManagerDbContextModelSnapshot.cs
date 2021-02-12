@@ -41,6 +41,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     b.Property<bool>("canMoveTo")
                         .HasColumnType("bit");
 
+                    b.Property<int>("gameId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cells");
@@ -71,6 +74,52 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Monsters");
+                });
+
+            modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.ObjectPlayer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ObjectTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ObjectTypeId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("ObjectPlayers");
+                });
+
+            modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.ObjectType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AttackStrenghBoost")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DefenseBoost")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HPRestoreValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ObjectTypes");
                 });
 
             modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.Player", b =>
@@ -128,6 +177,21 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     b.ToTable("Weapons");
                 });
 
+            modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.ObjectPlayer", b =>
+                {
+                    b.HasOne("ProjetZORK.DataAccessLayer.Models.ObjectType", "ObjectType")
+                        .WithMany()
+                        .HasForeignKey("ObjectTypeId");
+
+                    b.HasOne("ProjetZORK.DataAccessLayer.Models.Player", "Player")
+                        .WithMany("ObjectInventory")
+                        .HasForeignKey("PlayerId");
+
+                    b.Navigation("ObjectType");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.Player", b =>
                 {
                     b.HasOne("ProjetZORK.DataAccessLayer.Models.Cell", "currentCell")
@@ -148,6 +212,8 @@ namespace ProjetZORK.DataAccessLayer.Migrations
 
             modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.Player", b =>
                 {
+                    b.Navigation("ObjectInventory");
+
                     b.Navigation("WeaponsInventory");
                 });
 #pragma warning restore 612, 618

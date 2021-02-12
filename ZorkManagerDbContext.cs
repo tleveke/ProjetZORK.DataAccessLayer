@@ -19,5 +19,8 @@ namespace ProjetZORK.DataAccessLayer
         public DbSet<Monster> Monsters { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
 
+        public DbSet<ObjectPlayer> ObjectPlayers { get; set; }
+        public DbSet<ObjectType> ObjectTypes { get; set; }
+
     }
 }
