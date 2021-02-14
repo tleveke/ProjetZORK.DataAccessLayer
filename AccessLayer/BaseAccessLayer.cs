@@ -37,14 +37,12 @@ public abstract class BaseAccessLayer<TModel>
     /// </summary>
     /// <param name="model">Object model to add</param>
     /// <returns>Returns the Id of newly created object.</returns>
-    public async Task<int> AddAsync(TModel model)
+    public async Task<TModel> AddAsync(TModel model)
     {
-        this.context.Entry(model).State = EntityState.Detached;
         var result = this.modelSet.Add(model);
-
         await this.context.SaveChangesAsync().ConfigureAwait(false);
 
-        return result.Entity.Id;
+        return result.Entity;
     }
 
     /// <summary>
@@ -56,7 +54,7 @@ public abstract class BaseAccessLayer<TModel>
     /// <param name="filter">Expression to filter data to return.</param>
     /// <param name="trackingEnabled">true if tracking is needed on data returned, false otherwise.</param>
     /// <returns>Returns Enumerable of <typeparamref name="TModel" />.</returns>
-    public IEnumerable<TModel> GetCollection(Expression<Func<TModel, bool>> filter = null, bool trackingEnabled = false)
+    public virtual IEnumerable<TModel> GetCollection(Expression<Func<TModel, bool>> filter = null, bool trackingEnabled = false)
     {
         var dbQuery = this.modelSet.AsQueryable();
 
@@ -81,12 +79,13 @@ public abstract class BaseAccessLayer<TModel>
     /// <param name="filter">filter to apply</param>
     /// <param name="trackingEnabled">true if tracking is needed on data returned, false otherwise.</param>
     /// <returns>Returns <typeparamref name="TModel" />.</returns>
-    public TModel GetSingle(Expression<Func<TModel, bool>> filter, bool trackingEnabled = false)
+    public virtual TModel GetSingle(Expression<Func<TModel, bool>> filter, bool trackingEnabled = false)
     {
-        var dbQuery = this.modelSet.AsNoTracking().AsQueryable();
+        var dbQuery = this.modelSet.AsQueryable();
 
-        var item = dbQuery.AsNoTracking().FirstOrDefault(filter);
-
+        var item = trackingEnabled
+                        ? dbQuery.FirstOrDefault(filter)
+                        : dbQuery.AsNoTracking().FirstOrDefault(filter);
         return item;
     }
 
@@ -97,7 +96,9 @@ public abstract class BaseAccessLayer<TModel>
     /// <returns>Returns number of state entries written to the database.</returns>
     public async Task<int> UpdateAsync(TModel model)
     {
-        this.context.Entry(model).State = EntityState.Detached;
+
+        this.context.Entry(await this.modelSet.FirstOrDefaultAsync(x => x.Id == model.Id)).CurrentValues.SetValues(model);
+
         this.modelSet.Update(model);
         return await this.context.SaveChangesAsync().ConfigureAwait(false);
     }

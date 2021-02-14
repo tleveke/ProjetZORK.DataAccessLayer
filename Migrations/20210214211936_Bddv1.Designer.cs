@@ -10,7 +10,7 @@ using ProjetZORK.DataAccessLayer;
 namespace ProjetZORK.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ZorkManagerDbContext))]
-    [Migration("20210212103440_Bddv1")]
+    [Migration("20210214211936_Bddv1")]
     partial class Bddv1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -13,10 +13,11 @@ namespace ProjetZORK.DataAccessLayer.Extensions
     {
         public static IServiceCollection AddDataAccessLayerService(this IServiceCollection services)
         {
-            services.AddDbContext<ZorkManagerDbContext>(options =>
+            /*services.AddDbContext<ZorkManagerDbContext>(options =>
             {
                 options.UseSqlServer("Server=localhost;Database=ZorkDb;Trusted_Connection=true;", opt => opt.MigrationsAssembly("ProjetZORK.DataAccessLayer"));
-            });
+            });*/
+            services.AddDbContext<ZorkManagerDbContext>(options => options.UseSqlServer("Server=localhost;Database=ZorkDb;Trusted_Connection=true;", opt => opt.MigrationsAssembly("ProjetZORK.DataAccessLayer")), ServiceLifetime.Transient);
 
             services.AddTransient<ZorkAccessLayer>();
             services.AddTransient<CellAccessLayer>();
