@@ -39,7 +39,9 @@ public abstract class BaseAccessLayer<TModel>
     /// <returns>Returns the Id of newly created object.</returns>
     public async Task<int> AddAsync(TModel model)
     {
+        this.context.Entry(model).State = EntityState.Detached;
         var result = this.modelSet.Add(model);
+
         await this.context.SaveChangesAsync().ConfigureAwait(false);
 
         return result.Entity.Id;
@@ -81,11 +83,9 @@ public abstract class BaseAccessLayer<TModel>
     /// <returns>Returns <typeparamref name="TModel" />.</returns>
     public TModel GetSingle(Expression<Func<TModel, bool>> filter, bool trackingEnabled = false)
     {
-        var dbQuery = this.modelSet.AsQueryable();
+        var dbQuery = this.modelSet.AsNoTracking().AsQueryable();
 
-        var item = trackingEnabled
-                        ? dbQuery.FirstOrDefault(filter)
-                        : dbQuery.AsNoTracking().FirstOrDefault(filter);
+        var item = dbQuery.AsNoTracking().FirstOrDefault(filter);
 
         return item;
     }
@@ -97,6 +97,7 @@ public abstract class BaseAccessLayer<TModel>
     /// <returns>Returns number of state entries written to the database.</returns>
     public async Task<int> UpdateAsync(TModel model)
     {
+        this.context.Entry(model).State = EntityState.Detached;
         this.modelSet.Update(model);
         return await this.context.SaveChangesAsync().ConfigureAwait(false);
     }
