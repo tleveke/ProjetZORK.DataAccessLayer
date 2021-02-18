@@ -67,14 +67,14 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     XP = table.Column<int>(type: "int", nullable: false),
                     HP = table.Column<int>(type: "int", nullable: false),
                     MaxHP = table.Column<int>(type: "int", nullable: false),
-                    currentCellId = table.Column<int>(type: "int", nullable: true)
+                    CellId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Players", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Players_Cells_currentCellId",
-                        column: x => x.currentCellId,
+                        name: "FK_Players_Cells_CellId",
+                        column: x => x.CellId,
                         principalTable: "Cells",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -139,9 +139,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_currentCellId",
+                name: "IX_Players_CellId",
                 table: "Players",
-                column: "currentCellId");
+                column: "CellId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Weapons_playerId",

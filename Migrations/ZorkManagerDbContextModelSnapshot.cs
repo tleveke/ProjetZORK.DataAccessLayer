@@ -129,6 +129,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CellId")
+                        .HasColumnType("int");
+
                     b.Property<int>("HP")
                         .HasColumnType("int");
 
@@ -141,12 +144,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     b.Property<int>("XP")
                         .HasColumnType("int");
 
-                    b.Property<int?>("currentCellId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("currentCellId");
+                    b.HasIndex("CellId");
 
                     b.ToTable("Players");
                 });
@@ -194,11 +194,11 @@ namespace ProjetZORK.DataAccessLayer.Migrations
 
             modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.Player", b =>
                 {
-                    b.HasOne("ProjetZORK.DataAccessLayer.Models.Cell", "currentCell")
+                    b.HasOne("ProjetZORK.DataAccessLayer.Models.Cell", "Cell")
                         .WithMany()
-                        .HasForeignKey("currentCellId");
+                        .HasForeignKey("CellId");
 
-                    b.Navigation("currentCell");
+                    b.Navigation("Cell");
                 });
 
             modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.Weapon", b =>
