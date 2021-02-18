@@ -8,10 +8,16 @@ namespace ProjetZORK.DataAccessLayer
 {
     public class ZorkManagerDbContext : DbContext
     {
+        public readonly DbContextOptions<ZorkManagerDbContext> _options;
+
+        public ZorkManagerDbContext()
+        {
+        }
+
         public ZorkManagerDbContext(DbContextOptions<ZorkManagerDbContext> options)
             : base(options)
         {
-
+            this._options = options;
         }
 
         public DbSet<Player> Players { get; set; }

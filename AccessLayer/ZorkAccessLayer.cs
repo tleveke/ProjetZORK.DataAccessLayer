@@ -25,7 +25,7 @@ namespace ProjetZORK.DataAccessLayer.AccessLayer
                 : filter;
 
             var collection = trackingEnabled
-                            ? dbQuery.Where(filterToApply)
+                            ? dbQuery.Where(filterToApply).Include(p => p.currentCell)
                             : dbQuery.AsNoTracking().Where(filterToApply).Include(p => p.currentCell);
 
             return collection;

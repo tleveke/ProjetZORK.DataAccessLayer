@@ -14,6 +14,7 @@ namespace ProjetZORK.DataAccessLayer.AccessLayer
             : base(context)
         {
 
+
         }
     }
 }

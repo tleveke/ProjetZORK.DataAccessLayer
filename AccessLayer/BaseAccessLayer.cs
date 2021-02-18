@@ -88,19 +88,34 @@ public abstract class BaseAccessLayer<TModel>
                         : dbQuery.AsNoTracking().FirstOrDefault(filter);
         return item;
     }
+    public virtual async Task<TModel> GetSingleAsync(Expression<Func<TModel, bool>> filter, bool trackingEnabled = false)
+    {
+        var dbQuery = this.modelSet.AsQueryable();
 
+        var item = trackingEnabled
+                        ? await dbQuery.FirstOrDefaultAsync(filter)
+                        : await dbQuery.AsNoTracking().FirstOrDefaultAsync(filter);
+
+        return item;
+    }
     /// <summary>
     ///     Async method that update a specific data object.
     /// </summary>
     /// <param name="model">The object data model to update.</param>
     /// <returns>Returns number of state entries written to the database.</returns>
-    public async Task<int> UpdateAsync(TModel model)
+    public async Task<TModel> UpdateAsync(TModel model)
     {
-
-        this.context.Entry(await this.modelSet.FirstOrDefaultAsync(x => x.Id == model.Id)).CurrentValues.SetValues(model);
-
-        this.modelSet.Update(model);
-        return await this.context.SaveChangesAsync().ConfigureAwait(false);
+        //this.context.Entry(await this.modelSet.FirstOrDefaultAsync(x => x.Id == model.Id)).CurrentValues.SetValues(model);
+        using (var db = new ZorkManagerDbContext())
+        {
+            context.Entry(model).CurrentValues.SetValues(model);
+            context.SaveChanges();
+            return model;
+        }
+        
+        /*this.modelSet.Update(model);
+        await this.context.SaveChangesAsync().ConfigureAwait(false); //Problem Dispose context
+        return model;*/
     }
 
     /// <summary>
