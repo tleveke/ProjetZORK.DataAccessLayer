@@ -40,9 +40,14 @@ public abstract class BaseAccessLayer<TModel>
     public async Task<TModel> AddAsync(TModel model)
     {
         var result = this.modelSet.Add(model);
-        await this.context.SaveChangesAsync().ConfigureAwait(false);
-
+        await this.context.SaveChangesAsync().ConfigureAwait(true);
         return result.Entity;
+        /*using (var db = new ZorkManagerDbContext())
+        {
+            context.Entry(model).CurrentValues.SetValues(model);
+            context.SaveChanges();
+            return model;
+        }*/
     }
 
     /// <summary>

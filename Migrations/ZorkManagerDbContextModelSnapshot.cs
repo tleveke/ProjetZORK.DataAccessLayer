@@ -44,6 +44,12 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     b.Property<int>("gameId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("objectGet")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("trapRate")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cells");
@@ -129,7 +135,13 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Attack")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CellId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Defense")
                         .HasColumnType("int");
 
                     b.Property<int>("HP")
@@ -141,12 +153,17 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WeaponId")
+                        .HasColumnType("int");
+
                     b.Property<int>("XP")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CellId");
+
+                    b.HasIndex("WeaponId");
 
                     b.ToTable("Players");
                 });
@@ -167,12 +184,7 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("playerId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("playerId");
 
                     b.ToTable("Weapons");
                 });
@@ -198,23 +210,18 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                         .WithMany()
                         .HasForeignKey("CellId");
 
+                    b.HasOne("ProjetZORK.DataAccessLayer.Models.Weapon", "Weapon")
+                        .WithMany()
+                        .HasForeignKey("WeaponId");
+
                     b.Navigation("Cell");
-                });
 
-            modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.Weapon", b =>
-                {
-                    b.HasOne("ProjetZORK.DataAccessLayer.Models.Player", "player")
-                        .WithMany("WeaponsInventory")
-                        .HasForeignKey("playerId");
-
-                    b.Navigation("player");
+                    b.Navigation("Weapon");
                 });
 
             modelBuilder.Entity("ProjetZORK.DataAccessLayer.Models.Player", b =>
                 {
                     b.Navigation("ObjectInventory");
-
-                    b.Navigation("WeaponsInventory");
                 });
 #pragma warning restore 612, 618
         }

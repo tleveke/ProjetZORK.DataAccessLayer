@@ -15,6 +15,8 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     PosX = table.Column<int>(type: "int", nullable: false),
                     PosY = table.Column<int>(type: "int", nullable: false),
                     MonsterRate = table.Column<int>(type: "int", nullable: false),
+                    objectGet = table.Column<bool>(type: "bit", nullable: false),
+                    trapRate = table.Column<int>(type: "int", nullable: false),
                     canMoveTo = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     gameId = table.Column<int>(type: "int", nullable: false)
@@ -58,6 +60,21 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Weapons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AttackRate = table.Column<int>(type: "int", nullable: false),
+                    MissRate = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Weapons", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Players",
                 columns: table => new
                 {
@@ -67,7 +84,10 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     XP = table.Column<int>(type: "int", nullable: false),
                     HP = table.Column<int>(type: "int", nullable: false),
                     MaxHP = table.Column<int>(type: "int", nullable: false),
-                    CellId = table.Column<int>(type: "int", nullable: true)
+                    Attack = table.Column<int>(type: "int", nullable: false),
+                    Defense = table.Column<int>(type: "int", nullable: false),
+                    CellId = table.Column<int>(type: "int", nullable: true),
+                    WeaponId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,6 +96,12 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                         name: "FK_Players_Cells_CellId",
                         column: x => x.CellId,
                         principalTable: "Cells",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Players_Weapons_WeaponId",
+                        column: x => x.WeaponId,
+                        principalTable: "Weapons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -106,28 +132,6 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Weapons",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AttackRate = table.Column<int>(type: "int", nullable: false),
-                    MissRate = table.Column<int>(type: "int", nullable: false),
-                    playerId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Weapons", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Weapons_Players_playerId",
-                        column: x => x.playerId,
-                        principalTable: "Players",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ObjectPlayers_ObjectTypeId",
                 table: "ObjectPlayers",
@@ -144,9 +148,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                 column: "CellId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Weapons_playerId",
-                table: "Weapons",
-                column: "playerId");
+                name: "IX_Players_WeaponId",
+                table: "Players",
+                column: "WeaponId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -158,9 +162,6 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                 name: "ObjectPlayers");
 
             migrationBuilder.DropTable(
-                name: "Weapons");
-
-            migrationBuilder.DropTable(
                 name: "ObjectTypes");
 
             migrationBuilder.DropTable(
@@ -168,6 +169,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cells");
+
+            migrationBuilder.DropTable(
+                name: "Weapons");
         }
     }
 }

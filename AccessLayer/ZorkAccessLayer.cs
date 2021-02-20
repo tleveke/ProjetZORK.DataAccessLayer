@@ -35,8 +35,8 @@ namespace ProjetZORK.DataAccessLayer.AccessLayer
             var dbQuery = this.modelSet.AsQueryable();
 
             var item = trackingEnabled
-                            ? dbQuery.Include(p => p.Cell).FirstOrDefault(filter)
-                            : dbQuery.Include(p => p.Cell).AsNoTracking().FirstOrDefault(filter);
+                            ? dbQuery.Include(p => p.Cell).Include(p => p.ObjectInventory).FirstOrDefault(filter)
+                            : dbQuery.Include(p => p.Cell).Include(p => p.ObjectInventory).AsNoTracking().FirstOrDefault(filter);
             return item;
         }
     }
