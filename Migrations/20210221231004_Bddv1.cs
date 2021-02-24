@@ -66,6 +66,7 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AttackPower = table.Column<int>(type: "int", nullable: false),
                     AttackRate = table.Column<int>(type: "int", nullable: false),
                     MissRate = table.Column<int>(type: "int", nullable: false)
                 },

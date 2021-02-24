@@ -25,6 +25,7 @@ namespace ProjetZORK.DataAccessLayer.Extensions
             services.AddTransient<MonsterAccessLayer>();
             services.AddTransient<ObjectTypeAccessLayer>();
             services.AddTransient<ObjectPlayerAccessLayer>();
+            services.AddTransient<WeaponAccessLayer>();
 
             return services;
         }

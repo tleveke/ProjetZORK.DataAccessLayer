@@ -175,6 +175,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AttackPower")
+                        .HasColumnType("int");
+
                     b.Property<int>("AttackRate")
                         .HasColumnType("int");
 
