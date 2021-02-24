@@ -159,6 +159,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     b.Property<int>("XP")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isFinish")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CellId");

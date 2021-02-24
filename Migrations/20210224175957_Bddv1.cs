@@ -88,7 +88,8 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     Attack = table.Column<int>(type: "int", nullable: false),
                     Defense = table.Column<int>(type: "int", nullable: false),
                     CellId = table.Column<int>(type: "int", nullable: true),
-                    WeaponId = table.Column<int>(type: "int", nullable: true)
+                    WeaponId = table.Column<int>(type: "int", nullable: true),
+                    isFinish = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -16,5 +16,7 @@ namespace ProjetZORK.DataAccessLayer.Models
         public Weapon Weapon { get; set; }
         public ICollection<ObjectPlayer> ObjectInventory { get; set; }
 
+        public bool isFinish { get; set; }
+
     }
 }
