@@ -10,7 +10,7 @@ using ProjetZORK.DataAccessLayer;
 namespace ProjetZORK.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ZorkManagerDbContext))]
-    [Migration("20210224175957_Bddv1")]
+    [Migration("20210225175133_Bddv1")]
     partial class Bddv1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,9 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Attack")
+                        .HasColumnType("int");
 
                     b.Property<int>("AttackRate")
                         .HasColumnType("int");

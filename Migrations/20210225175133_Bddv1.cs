@@ -36,7 +36,8 @@ namespace ProjetZORK.DataAccessLayer.Migrations
                     AttackRate = table.Column<int>(type: "int", nullable: false),
                     MissRate = table.Column<int>(type: "int", nullable: false),
                     HP = table.Column<int>(type: "int", nullable: false),
-                    Group = table.Column<int>(type: "int", nullable: false)
+                    Group = table.Column<int>(type: "int", nullable: false),
+                    Attack = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

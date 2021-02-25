@@ -11,5 +11,6 @@ namespace ProjetZORK.DataAccessLayer.Models
         public int MissRate { get; set; }
         public int HP { get; set; }
         public int Group { get; set; }
+        public int Attack { get; set; }
     }
 }
